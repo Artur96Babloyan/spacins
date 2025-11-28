@@ -12,7 +12,7 @@ Allow: /
 Allow: /blogs
 Allow: /services
 Allow: /solutions
-Allow: /companions
+Allow: /about
 Allow: /contact
 Allow: /process
 

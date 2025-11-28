@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 type SpaceTiltProps = {
@@ -14,14 +14,15 @@ export default function SpaceTilt({ children, className = "", intensity = 15 }: 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [intensity, -intensity]), {
-    stiffness: 200,
-    damping: 25,
-  });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-intensity, intensity]), {
-    stiffness: 200,
-    damping: 25,
-  });
+  // Removed rotation transforms - no rotation on hover
+  // const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [intensity, -intensity]), {
+  //   stiffness: 200,
+  //   damping: 25,
+  // });
+  // const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-intensity, intensity]), {
+  //   stiffness: 200,
+  //   damping: 25,
+  // });
 
   // Add glow effect based on mouse position
   const glowX = useTransform(x, [-0.5, 0.5], [-20, 20]);
@@ -57,9 +58,7 @@ export default function SpaceTilt({ children, className = "", intensity = 15 }: 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
+        // Removed rotation transforms
       }}
       className={className}
     >

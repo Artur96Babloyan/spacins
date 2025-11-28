@@ -40,14 +40,16 @@ export default function PreviewShowcase({ items }: PreviewShowcaseProps) {
             className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-[0_30px_70px_-45px_rgba(56,189,248,0.6)] transition hover:border-sky-400/60 hover:shadow-[0_45px_90px_-40px_rgba(56,189,248,0.85)]"
           >
           <div className="relative h-48 overflow-hidden">
-            <motion.div
-              initial={{ scale: 1.05 }}
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0"
-            >
-              <Image src={item.image} alt={item.title} fill priority={index === 0} className="object-cover" />
-            </motion.div>
+            <div className="absolute inset-0">
+              <Image 
+                src={item.image} 
+                alt={item.title} 
+                fill 
+                priority={index === 0} 
+                className="object-cover" 
+                unoptimized={item.image.startsWith("http")}
+              />
+            </div>
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/0 to-slate-950/10 opacity-90 transition group-hover:opacity-100" />
           </div>
           <div className="flex flex-1 flex-col justify-between p-8">

@@ -74,24 +74,22 @@ export default function SpaceCursor() {
         y: cursorYSpring,
       }}
     >
-      {/* Main planet/cursor */}
+      {/* Main cursor dot */}
       <motion.div
-        className="relative h-10 w-10"
+        className="relative"
         animate={{
-          scale: isHovering ? 1.8 : 1,
-          rotate: [0, 360],
+          scale: isHovering ? 1.5 : 1,
         }}
         transition={{
           scale: { type: "spring", stiffness: 400, damping: 25 },
-          rotate: { duration: 20, repeat: Infinity, ease: "linear" },
         }}
       >
         {/* Outer ring */}
         <motion.div
-          className="absolute inset-0 rounded-full border-2 border-sky-400/60"
+          className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-sky-400/80"
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.6, 0.9, 0.6],
+            scale: isHovering ? [1, 1.4, 1] : [1, 1.2, 1],
+            opacity: isHovering ? [0.8, 1, 0.8] : [0.6, 0.9, 0.6],
           }}
           transition={{
             duration: 2,
@@ -99,86 +97,49 @@ export default function SpaceCursor() {
             ease: "easeInOut",
           }}
         />
-        {/* Planet core */}
-        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-sky-400 via-cyan-400 to-violet-400 shadow-[0_0_20px_rgba(56,189,248,0.8),0_0_40px_rgba(139,92,246,0.6)]" />
-        {/* Planet glow */}
+        
+        {/* Inner dot */}
         <motion.div
-          className="absolute inset-0 rounded-full bg-sky-400/30 blur-md"
+          className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.9)]"
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.4, 0.7, 0.4],
+            scale: isHovering ? [1, 1.3, 1] : [1, 1.1, 1],
+            opacity: [0.9, 1, 0.9],
           }}
           transition={{
             duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* Glow effect */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-400/40 blur-sm"
+          animate={{
+            scale: isHovering ? [1, 1.8, 1] : [1, 1.5, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 1.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
       </motion.div>
 
-      {/* Orbiting stars */}
-      {[...Array(3)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(103,232,249,1)]"
-          style={{
-            x: "-50%",
-            y: "-50%",
-          }}
-          animate={{
-            x: [
-              `calc(-50% + ${30 * Math.cos((i * 2 * Math.PI) / 3)}px)`,
-              `calc(-50% + ${35 * Math.cos((i * 2 * Math.PI) / 3 + Math.PI)}px)`,
-              `calc(-50% + ${30 * Math.cos((i * 2 * Math.PI) / 3)}px)`,
-            ],
-            y: [
-              `calc(-50% + ${30 * Math.sin((i * 2 * Math.PI) / 3)}px)`,
-              `calc(-50% + ${35 * Math.sin((i * 2 * Math.PI) / 3 + Math.PI)}px)`,
-              `calc(-50% + ${30 * Math.sin((i * 2 * Math.PI) / 3)}px)`,
-            ],
-            scale: [0.8, 1.2, 0.8],
-            opacity: [0.6, 1, 0.6],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.2,
-          }}
-        />
-      ))}
-
-      {/* Trailing particles */}
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={`particle-${i}`}
-          className="absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-sky-300"
-          style={{
-            x: "-50%",
-            y: "-50%",
-          }}
-          animate={{
-            x: [
-              `calc(-50% + ${-15 + i * 5}px)`,
-              `calc(-50% + ${-20 + i * 5}px)`,
-              `calc(-50% + ${-15 + i * 5}px)`,
-            ],
-            y: [
-              `calc(-50% + ${-15 + i * 5}px)`,
-              `calc(-50% + ${-20 + i * 5}px)`,
-              `calc(-50% + ${-15 + i * 5}px)`,
-            ],
-            opacity: [0, 0.8, 0],
-            scale: [0, 1, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeOut",
-            delay: i * 0.1,
-          }}
-        />
-      ))}
+      {/* Subtle pulse ring */}
+      <motion.div
+        className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border border-sky-400/20"
+        animate={{
+          scale: [1, 1.5, 1],
+          opacity: [0.3, 0, 0.3],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeOut",
+        }}
+      />
     </motion.div>
   );
 }

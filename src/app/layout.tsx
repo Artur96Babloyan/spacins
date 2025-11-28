@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import SpaceCursor from "@/components/SpaceCursor";
 import StructuredData from "@/components/StructuredData";
+import AnimatedBackground from "@/components/AnimatedBackground";
 import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
       "Strategic product, design, and AI partners helping founders launch intelligent experiences faster.",
     images: [
       {
-        url: "/spacins-mark.svg",
+        url: "/spacins-logo.svg",
         width: 1200,
         height: 630,
         alt: "Spacins AI Studio",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Spacins AI Studio | Strategic Product, Design & AI Partners",
     description:
       "Strategic product, design, and AI partners helping founders launch intelligent experiences faster.",
-    images: ["/spacins-mark.svg"],
+    images: ["/spacins-logo.svg"],
     creator: "@spacins",
   },
   robots: {
@@ -91,8 +91,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <AnimatedBackground />
         <StructuredData />
-        <SpaceCursor />
         {children}
       </body>
     </html>

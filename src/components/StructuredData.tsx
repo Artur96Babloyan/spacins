@@ -4,7 +4,7 @@ export default function StructuredData() {
     "@type": "Organization",
     name: "Spacins AI Studio",
     url: "https://spacins.ai",
-    logo: "https://spacins.ai/spacins-mark.svg",
+    logo: "https://spacins.ai/spacins-logo.svg",
     description:
       "Strategic product, design, and AI partners helping founders launch intelligent experiences faster.",
     email: "hello@spacins.ai",

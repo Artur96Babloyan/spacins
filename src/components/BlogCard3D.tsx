@@ -20,7 +20,7 @@ function Card3D({ post, index }: { post: BlogEntry; index: number }) {
     meshRef.current.position.y = Math.sin(time * 0.3 + index) * 0.1;
 
     if (hovered) {
-      meshRef.current.rotation.y += 0.02;
+      // Removed rotation on hover - only scale effect remains
       meshRef.current.scale.lerp(new THREE.Vector3(1.05, 1.05, 1.05), 0.1);
     } else {
       meshRef.current.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);

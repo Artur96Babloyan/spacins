@@ -17,7 +17,7 @@ const previewSections = [
     title: "Modular systems for emerging categories",
     description:
       "Composable architectures for fintech, spatial commerce, and AI-native platforms. Explore how we blend research, design, and engineering to accelerate your roadmap.",
-    image: "/media/preview-solutions.svg",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop&q=80",
     cta: {
       label: "View solutions",
       href: "/solutions",
@@ -28,21 +28,21 @@ const previewSections = [
     title: "Hands-on teams across product, design, and AI",
     description:
       "Multidisciplinary squads embedding alongside your founders and product leads. From discovery sprints to go-live, we shape the full journey.",
-    image: "/media/preview-services.svg",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop&q=80",
     cta: {
       label: "See our services",
       href: "/services",
     },
   },
   {
-    eyebrow: "Companions",
-    title: "Domain-tuned AI copilots ready to deploy",
+    eyebrow: "About",
+    title: "Meet the team behind Spacins",
     description:
-      "Launch conversation-first copilots with voice, text, and workflow automations tuned to your industry. Tailored knowledge, observability, and compliance from day one.",
-    image: "/media/preview-companions.svg",
+      "Founded by Hayk Maruqyan and Artur Babloyan, we're passionate about building intelligent products that scale. Learn about our mission, values, and the people driving innovation.",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop&q=80",
     cta: {
-      label: "Meet the companions",
-      href: "/companions",
+      label: "Learn more about us",
+      href: "/about",
     },
   },
 ];
@@ -63,7 +63,7 @@ export default function Home() {
                 Orbit with Spacins
               </p>
               <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                Three ways we ship impact from day zero
+                Explore what we do
               </h2>
               <p className="mx-auto max-w-3xl text-sm leading-6 text-slate-400">
                 Every engagement we start pairs founders with our systems strategists, product designers, and applied AI engineers.

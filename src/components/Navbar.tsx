@@ -13,8 +13,8 @@ const navigation = [
     href: "/services",
   },
   {
-    name: "Companions",
-    href: "/companions",
+    name: "About",
+    href: "/about",
   },
   {
     name: "Blogs",
@@ -42,21 +42,17 @@ export default function Navbar() {
           <div className="flex flex-1 items-center justify-between gap-6">
             <Link
               href="/"
-              className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white transition hover:border-sky-400/60 hover:bg-slate-900/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+              className="group flex items-center justify-center rounded-full    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
               aria-label="Return to homepage"
             >
               <Image
                 width={40}
                 height={40}
-                className="h-8 w-8 rounded-full border border-sky-400/40 shadow-[0_0_25px_rgba(56,189,248,0.35)]"
-                src="/spacins-mark.svg"
-                alt="Spacins mark"
+                className="h-14 w-auto rounded-full"
+                src="/spacins-logo.svg"
+                alt="Spacins logo"
                 priority
               />
-              <span className="flex flex-col leading-none">
-                <span className="text-xs uppercase tracking-[0.3em] text-sky-300/80">Spacins</span>
-                <span className="text-base font-semibold text-white">AI Studio</span>
-              </span>
             </Link>
             <nav className="hidden md:flex flex-1 items-center justify-end gap-1 text-sm text-slate-300">
               {navigation.map((item) => {
@@ -86,11 +82,6 @@ export default function Navbar() {
                 );
               })}
             </nav>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300 shadow-[0_0_20px_rgba(56,189,248,0.2)]">
-              <span className="font-semibold text-white">Now partnering with seed to Series B teams</span>
-            </div>
           </div>
         </div>
         <nav className="md:hidden flex items-center gap-2 overflow-x-auto pb-3 pt-1 text-sm text-slate-300">

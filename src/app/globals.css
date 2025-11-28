@@ -19,28 +19,7 @@
 body {
   @apply text-slate-100 antialiased;
   background-color: #020617;
-  background-image: radial-gradient(
-      circle at top,
-      rgba(56, 189, 248, 0.05),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(59, 130, 246, 0.05),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(165, 180, 252, 0.06),
-      transparent 45%
-    );
-  cursor: none;
-}
-
-@media (hover: none) {
-  body {
-    cursor: auto;
-  }
+  /* Base background - animated gradients are handled by AnimatedBackground component */
 }
 
 ::selection {

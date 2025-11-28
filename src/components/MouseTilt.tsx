@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 type MouseTiltProps = {
@@ -14,14 +14,15 @@ export default function MouseTilt({ children, className = "", intensity = 15 }: 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [intensity, -intensity]), {
-    stiffness: 300,
-    damping: 30,
-  });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-intensity, intensity]), {
-    stiffness: 300,
-    damping: 30,
-  });
+  // Removed rotation transforms - no rotation on hover
+  // const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [intensity, -intensity]), {
+  //   stiffness: 300,
+  //   damping: 30,
+  // });
+  // const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-intensity, intensity]), {
+  //   stiffness: 300,
+  //   damping: 30,
+  // });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -45,9 +46,7 @@ export default function MouseTilt({ children, className = "", intensity = 15 }: 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
+        // Removed rotation transforms
       }}
       className={className}
     >
