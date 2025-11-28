@@ -27,8 +27,11 @@ export function AdvancedParallax({
   });
 
   const y = useTransform(scrollYProgress, [0, 1], direction === "up" ? [100 * speed, -100 * speed] : [-100 * speed, 100 * speed]);
-  const opacityValue = opacity ? useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]) : 1;
-  const scaleValue = scale ? useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.1]) : 1;
+  // Always call hooks - conditionally use the result
+  const opacityTransform = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  const scaleTransform = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.1]);
+  const opacityValue = opacity ? opacityTransform : 1;
+  const scaleValue = scale ? scaleTransform : 1;
 
   const smoothY = useSpring(y, { stiffness: 100, damping: 30 });
 
@@ -93,8 +96,11 @@ export function RevealText({ children, delay = 0, className = "", direction = "u
   };
 
   const [start, end] = directions[direction];
-  const y = direction === "up" || direction === "down" ? useTransform(scrollYProgress, [0, 1], [start, end]) : 0;
-  const x = direction === "left" || direction === "right" ? useTransform(scrollYProgress, [0, 1], [start, end]) : 0;
+  // Always call hooks - conditionally use the result
+  const yTransform = useTransform(scrollYProgress, [0, 1], [start, end]);
+  const xTransform = useTransform(scrollYProgress, [0, 1], [start, end]);
+  const y = direction === "up" || direction === "down" ? yTransform : 0;
+  const x = direction === "left" || direction === "right" ? xTransform : 0;
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 1]);
 
   return (
