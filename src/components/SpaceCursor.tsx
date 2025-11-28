@@ -24,7 +24,9 @@ export default function SpaceCursor() {
     };
 
     const handleMouseEnter = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      
       if (
         target.tagName === "A" ||
         target.tagName === "BUTTON" ||
@@ -37,7 +39,9 @@ export default function SpaceCursor() {
     };
 
     const handleMouseLeave = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      
       if (
         target.tagName === "A" ||
         target.tagName === "BUTTON" ||
