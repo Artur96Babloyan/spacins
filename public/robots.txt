@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://spacins.ai/sitemap.xml
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /sign-in/
+Disallow: /sign-up/
+
+# Allow important pages
+Allow: /
+Allow: /blogs
+Allow: /services
+Allow: /solutions
+Allow: /companions
+Allow: /contact
+Allow: /process
+

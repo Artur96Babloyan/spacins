@@ -7,19 +7,17 @@ type ParallaxSectionProps = {
   children: ReactNode;
   speed?: number;
   className?: string;
-  offset?: [string, string];
 };
 
 export default function ParallaxSection({
   children,
   speed = 0.5,
   className = "",
-  offset = ["start end", "end start"],
 }: ParallaxSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset,
+    offset: ["start end", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -100 * speed]);

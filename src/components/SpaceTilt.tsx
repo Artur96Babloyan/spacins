@@ -28,7 +28,8 @@ export default function SpaceTilt({ children, className = "", intensity = 15 }: 
   const glowY = useTransform(y, [-0.5, 0.5], [-20, 20]);
   const glowOpacity = useTransform(
     [x, y],
-    ([xVal, yVal]) => {
+    (values: number[]) => {
+      const [xVal, yVal] = values;
       const distance = Math.sqrt(xVal * xVal + yVal * yVal);
       return Math.min(distance * 0.5, 0.3);
     }
