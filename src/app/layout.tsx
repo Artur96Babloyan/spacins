@@ -1,12 +1,13 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import SpaceCursor from "@/components/SpaceCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "AI Getting Started",
-  description: "Help you setup an AI project with ease",
+  title: "Spacins AI Studio",
+  description: "Strategic product, design, and AI partners helping founders launch intelligent experiences faster.",
 };
 
 export default function RootLayout({
@@ -17,7 +18,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <SpaceCursor />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

@@ -1,12 +1,33 @@
-import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs";
+"use client";
+
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+
 const navigation = [
   {
-    name: "About",
-    href: "https://github.com/a16z-infra/companion-app",
-    current: false,
+    name: "Solutions",
+    href: "/solutions",
+  },
+  {
+    name: "Services",
+    href: "/services",
+  },
+  {
+    name: "Companions",
+    href: "/companions",
+  },
+  {
+    name: "Blogs",
+    href: "/blogs",
+  },
+  {
+    name: "Process",
+    href: "/process",
+  },
+  {
+    name: "Contact",
+    href: "/contact",
   },
 ];
 
@@ -15,73 +36,102 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
-  const { userId } = auth();
   return (
-    <div className="bg-gray-900 w-full fixed top-0 z-10">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          <div className="flex flex-1 items-center justify-start">
-            <div className="flex flex-shrink-0 items-center">
+    <div className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur supports-[backdrop-filter]:bg-slate-950/60">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between gap-4">
+          <div className="flex flex-1 items-center justify-between gap-6">
+            <Link
+              href="/"
+              className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white transition hover:border-sky-400/60 hover:bg-slate-900/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+              aria-label="Return to homepage"
+            >
               <Image
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="block h-8 w-auto lg:hidden rounded-lg"
-                src="https://avatars.githubusercontent.com/u/745163?s=200&v=4"
-                alt="a16z"
+                width={40}
+                height={40}
+                className="h-8 w-8 rounded-full border border-sky-400/40 shadow-[0_0_25px_rgba(56,189,248,0.35)]"
+                src="/spacins-mark.svg"
+                alt="Spacins mark"
+                priority
               />
-              <Image
-                width={0}
-                height={0}
-                sizes="100vw"
-                className="hidden h-8 w-auto lg:block rounded-lg"
-                src="https://avatars.githubusercontent.com/u/745163?s=200&v=4"
-                alt="a16z"
-              />
-            </div>
-            <div className="ml-6">
-              <div className="flex space-x-2 sm:space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
-                  >
+              <span className="flex flex-col leading-none">
+                <span className="text-xs uppercase tracking-[0.3em] text-sky-300/80">Spacins</span>
+                <span className="text-base font-semibold text-white">AI Studio</span>
+              </span>
+            </Link>
+            <nav className="hidden md:flex flex-1 items-center justify-end gap-1 text-sm text-slate-300">
+              {navigation.map((item) => {
+                const isExternal = item.href.startsWith("http");
+                const commonClasses = classNames(
+                  "rounded-full px-3.5 py-2 font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+                  "hover:text-white hover:bg-white/10",
+                  "focus-visible:outline-sky-400"
+                );
+                if (isExternal) {
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={commonClasses}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                }
+                return (
+                  <Link key={item.name} href={item.href} className={commonClasses}>
                     {item.name}
-                  </a>
-                ))}
-                <div className="px-3 py-2 text-gray-300">
-                  <iframe
-                    src="https://ghbtns.com/github-btn.html?user=a16z-infra&repo=companion-app&type=star&count=true"
-                    frameBorder="0"
-                    scrolling="0"
-                    width="150"
-                    height="20"
-                    title="GitHub"
-                  ></iframe>
-                </div>
-              </div>
-            </div>
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {userId ? (
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300 shadow-[0_0_20px_rgba(56,189,248,0.2)]">
+              <span className="font-semibold text-white">Now partnering with seed to Series B teams</span>
+            </div>
+            <SignedIn>
               <UserButton afterSignOutUrl="/" />
-            ) : (
+            </SignedIn>
+            <SignedOut>
               <Link
                 href="/sign-in"
-                className="rounded-md bg-gray-800 py-2 px-3 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                className="rounded-full border border-sky-400/50 bg-sky-500/20 px-4 py-2 text-sm font-semibold text-sky-100 transition hover:border-sky-300 hover:bg-sky-500/30 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
               >
                 Sign In
               </Link>
-            )}
+            </SignedOut>
           </div>
         </div>
+        <nav className="md:hidden flex items-center gap-2 overflow-x-auto pb-3 pt-1 text-sm text-slate-300">
+          {navigation.map((item) => {
+            const isExternal = item.href.startsWith("http");
+            const baseClasses = classNames(
+              "whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition",
+              "hover:border-sky-400/60 hover:text-white"
+            );
+            if (isExternal) {
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={baseClasses}
+                >
+                  {item.name}
+                </a>
+              );
+            }
+            return (
+              <Link key={item.name} href={item.href} className={baseClasses}>
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
       </div>
     </div>
   );
