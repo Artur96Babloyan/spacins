@@ -2,23 +2,22 @@ import { OpenAI } from "langchain/llms/openai";
 import dotenv from "dotenv";
 import { LLMChain } from "langchain/chains";
 import { StreamingTextResponse, LangChainStream } from "ai";
-import clerk from "@clerk/clerk-sdk-node";
 import { CallbackManager } from "langchain/callbacks";
 import { PromptTemplate } from "langchain/prompts";
 import { NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs";
 import MemoryManager from "@/app/utils/memory";
 import { rateLimit } from "@/app/utils/rateLimit";
 
 dotenv.config({ path: `.env.local` });
 
 export async function POST(req: Request) {
-  let clerkUserId;
-  let user;
-  let clerkUserName;
   const { prompt, isText, userId, userName } = await req.json();
 
-  const identifier = req.url + "-" + (userId || "anonymous");
+  // Generate anonymous user ID if not provided
+  const anonymousUserId = userId || `anonymous-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const anonymousUserName = userName || "User";
+
+  const identifier = req.url + "-" + anonymousUserId;
   const { success } = await rateLimit(identifier);
   if (!success) {
     console.log("INFO: rate limit exceeded");
@@ -38,27 +37,6 @@ export async function POST(req: Request) {
   const companionFileName = name + ".txt";
 
   console.log("prompt: ", prompt);
-  if (isText) {
-    clerkUserId = userId;
-    clerkUserName = userName;
-  } else {
-    user = await currentUser();
-    clerkUserId = user?.id;
-    clerkUserName = user?.firstName;
-  }
-
-  if (!clerkUserId || !!!(await clerk.users.getUser(clerkUserId))) {
-    console.log("user not authorized");
-    return new NextResponse(
-      JSON.stringify({ Message: "User not authorized" }),
-      {
-        status: 401,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }
 
   // Load character "PREAMBLE" from character file. These are the core personality
   // characteristics that are used in every prompt. Additional background is
@@ -77,7 +55,7 @@ export async function POST(req: Request) {
   const companionKey = {
     companionName: name!,
     modelName: "chatgpt",
-    userId: clerkUserId,
+    userId: anonymousUserId,
   };
   const memoryManager = await MemoryManager.getInstance();
 
@@ -115,7 +93,7 @@ export async function POST(req: Request) {
     : "";
 
   const chainPrompt = PromptTemplate.fromTemplate(`
-    You are ${name} and are currently talking to ${clerkUserName}.
+    You are ${name} and are currently talking to ${anonymousUserName}.
 
     ${preamble}
 

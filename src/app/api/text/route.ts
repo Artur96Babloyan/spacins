@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import twilio from "twilio";
-import clerk from "@clerk/clerk-sdk-node";
 import dotenv from "dotenv";
 import ConfigManager from "@/app/utils/config";
 import { rateLimit } from "@/app/utils/rateLimit";
@@ -36,20 +35,9 @@ export async function POST(request: Request) {
     );
   }
 
-  // check if the user has verified phone #
-  const users = await clerk.users.getUserList({ phoneNumber });
-
-  if (!users || users.length == 0) {
-    return new NextResponse(
-      JSON.stringify({ Message: "User not authorized" }),
-      {
-        status: 401,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }
+  // Generate anonymous user ID for phone number
+  const anonymousUserId = `phone-${phoneNumber}`;
+  const anonymousUserName = "User";
 
   const configManager = ConfigManager.getInstance();
   const companionConfig = configManager.getConfig(
@@ -76,8 +64,8 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       prompt,
       isText: true,
-      userId: users[0].id,
-      userName: users[0].firstName,
+      userId: anonymousUserId,
+      userName: anonymousUserName,
     }),
     method: "POST",
     headers: { "Content-Type": "application/json", name: companionName },

@@ -1,6 +1,5 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import SpaceCursor from "@/components/SpaceCursor";
 import StructuredData from "@/components/StructuredData";
 import type { Metadata } from "next";
@@ -90,14 +89,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <StructuredData />
-          <SpaceCursor />
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <StructuredData />
+        <SpaceCursor />
+        {children}
+      </body>
+    </html>
   );
 }

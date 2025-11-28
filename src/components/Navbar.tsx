@@ -1,6 +1,5 @@
 "use client";
 
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -92,17 +91,6 @@ export default function Navbar() {
             <div className="hidden md:flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300 shadow-[0_0_20px_rgba(56,189,248,0.2)]">
               <span className="font-semibold text-white">Now partnering with seed to Series B teams</span>
             </div>
-            <SignedIn>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
-            <SignedOut>
-              <Link
-                href="/sign-in"
-                className="rounded-full border border-sky-400/50 bg-sky-500/20 px-4 py-2 text-sm font-semibold text-sky-100 transition hover:border-sky-300 hover:bg-sky-500/30 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
-              >
-                Sign In
-              </Link>
-            </SignedOut>
           </div>
         </div>
         <nav className="md:hidden flex items-center gap-2 overflow-x-auto pb-3 pt-1 text-sm text-slate-300">

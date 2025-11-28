@@ -2,9 +2,7 @@ import dotenv from "dotenv";
 import { StreamingTextResponse, LangChainStream } from "ai";
 import { Replicate } from "langchain/llms/replicate";
 import { CallbackManager } from "langchain/callbacks";
-import clerk from "@clerk/clerk-sdk-node";
 import MemoryManager from "@/app/utils/memory";
-import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/app/utils/rateLimit";
 
@@ -12,11 +10,12 @@ dotenv.config({ path: `.env.local` });
 
 export async function POST(request: Request) {
   const { prompt, isText, userId, userName } = await request.json();
-  let clerkUserId;
-  let user;
-  let clerkUserName;
 
-  const identifier = request.url + "-" + (userId || "anonymous");
+  // Generate anonymous user ID if not provided
+  const anonymousUserId = userId || `anonymous-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const anonymousUserName = userName || "User";
+
+  const identifier = request.url + "-" + anonymousUserId;
   const { success } = await rateLimit(identifier);
   if (!success) {
     console.log("INFO: rate limit exceeded");
@@ -35,27 +34,6 @@ export async function POST(request: Request) {
   const name = request.headers.get("name");
   const companion_file_name = name + ".txt";
 
-  if (isText) {
-    clerkUserId = userId;
-    clerkUserName = userName;
-  } else {
-    user = await currentUser();
-    clerkUserId = user?.id;
-    clerkUserName = user?.firstName;
-  }
-
-  if (!clerkUserId || !!!(await clerk.users.getUser(clerkUserId))) {
-    return new NextResponse(
-      JSON.stringify({ Message: "User not authorized" }),
-      {
-        status: 401,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }
-
   // Load character "PREAMBLE" from character file. These are the core personality
   // characteristics that are used in every prompt. Additional background is
   // only included if it matches a similarity comparioson with the current
@@ -72,7 +50,7 @@ export async function POST(request: Request) {
 
   const companionKey = {
     companionName: name!,
-    userId: clerkUserId!,
+    userId: anonymousUserId,
     modelName: "vicuna13b",
   };
   const memoryManager = await MemoryManager.getInstance();
